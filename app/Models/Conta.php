@@ -10,5 +10,9 @@ class Conta extends Model
     use HasFactory;
     
     protected $table = 'contas';
-    protected $fillable = ['nome', 'valor', 'vencimento'];
+    protected $fillable = ['nome', 'valor', 'vencimento', 'status_conta_id'];
+
+    public function statusConta(){
+        return $this->belongsTo(StatusConta::class);
+    }
 }

@@ -22,8 +22,8 @@
                         <input type="date" name="data_fim" id="data_fim" class="form-control" value="{{ $data_fim }}">
                     </div>
                     <div class="col-md-3 col-sm-12 mt-3 pt-4">
-                        <button type="submit" class="btn btn-info bt-sm">Pesquisar</button>
-                        <a href="{{ route('conta.index') }}" class="btn btn-warning bt-sm">Limpar</a>
+                        <button type="submit" class="btn btn-info btn-sm">Pesquisar</button>
+                        <a href="{{ route('conta.index') }}" class="btn btn-warning btn-sm">Limpar</a>
                     </div>
                 </div>
             </form>
@@ -33,9 +33,11 @@
         <div class="card-header d-flex justify-content-between">
             <span>Listar Contas</span>
             <span>
-                <a  class=" btn btn-success btn-sm" href="{{ route('conta.create') }}">
+                <a  class=" btn btn-dark btn-sm" href="{{ route('conta.create') }}">
                   Cadastrar
                 </a>
+                <a href="{{ url('gerar-pdf-conta?' . request()->getQueryString()) }}" class="btn btn-secondary btn-sm">Exportar</a>
+                <a href="{{ url('gerar-csv-conta?' . request()->getQueryString()) }}" class="btn btn-success btn-sm">Gerar Excel</a>
             </span>
         </div>
 
@@ -52,6 +54,7 @@
                         <td scope="col">Nome:</td>
                         <td scope="col">Valor:</td>
                         <td scope="col">Vencimento: </td>
+                        <td scope="col">Status</td>
                         <td scope="col"></td>
                     </tr>
                 </thead>
@@ -62,6 +65,7 @@
                         <td>{{ $conta->nome }}</td>
                         <td>{{ $conta->valor }}</td>
                         <td>{{ \Carbon\Carbon::parse($conta->vencimento)->tz('America/Sao_Paulo')->format('d/m/Y') }}</td>
+                        <td>{!! '<span class="badge text-bg-'.$conta->statusConta->cor.'">'.$conta->statusConta->nome.'</span>' !!}</td>
                         <td class="d-md-flex justify-content-center">
                             <a  class="btn btn-primary btn-sm me-1" href="{{ route('conta.show', ['conta' => $conta->id]) }}">
                                 Visualizar
